@@ -39,9 +39,10 @@ $ ng new frontend --style=scss
 $ cd frontend
 ```
 
-install media-element
+install media-element along with dash
 ```
 $ npm install mediaelement --save
+$ npm install dashjs --save
 ```
 
 
