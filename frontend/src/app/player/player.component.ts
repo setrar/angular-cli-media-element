@@ -26,8 +26,22 @@ export class PlayerComponent implements OnInit {
   // private song = 'rtsp://media.crave.fm:1935/vod/sample.mp4'
 
   private song;
+
+  // https://github.com/mediaelement/mediaelement/issues/643
+  private playFlashBack = {
+     mode: 'auto_plugin',
+    // shows debug errors on screen
+    enablePluginDebug: true,
+    plugins: ['flash', 'silverlight' ],
+
+    features: ['playpause', 'progress', 'current', 'duration', 'tracks', 'volume'],
+    pluginPath: '/assets/mejs/swf/',
+    success: function(mediaElement, originalNode) {
+      console.log('Initialized');
+    }
+  };
+
   private play = {
-    type: 'audio/mp3',
     features: ['playpause', 'progress', 'current', 'duration', 'tracks', 'volume'],
     pluginPath: '/assets/mejs/swf/',
     success: function(mediaElement, originalNode) {
@@ -44,6 +58,7 @@ export class PlayerComponent implements OnInit {
 
           // RTMP
         this.song = 'rtmp://media.crave.fm:1935/vod/mp3:TIAr0000000196Al0000000001So0000006243.mp3';
+        this.player = new MediaElementPlayer('player', this.playFlashBack);
 
         console.log('Chrome and Firefox - Player');
         break;
@@ -53,6 +68,7 @@ export class PlayerComponent implements OnInit {
 
         // HLS
         this.song = 'http://media.crave.fm:1935/vod/mp3:TIAr0000000196Al0000000001So0000006243.mp3/playlist.m3u8';
+        this.player = new MediaElementPlayer('player', this.play);
 
         console.log('Edge and Safari - Player');
         break;
@@ -62,7 +78,6 @@ export class PlayerComponent implements OnInit {
         console.log('BROWSER UNDEFINED');
         break;
     }
-    this.player = new MediaElementPlayer('player', this.play);
     this.player.setSrc(this.song);
     this.player.load();
   }
