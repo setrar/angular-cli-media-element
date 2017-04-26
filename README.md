@@ -1,6 +1,14 @@
 # Running media-element with Angular CLI
 
 
+
+| Protocol |    URL                                                                      |    Browsers                                 |  Comments                  |
+|:--------:|:---------------------------------------------------------------------------:|:--------------------------------------------|:---------------------------| 
+|          |                                                                             |    Mac               |   Windows            |                            |
+|          |                                                                             | FFOX | CHRM | SAFR   |  FFOX | CHRM | EDGE  |                            |
+|   RTMP   |rtmp://media.crave.fm:1935/vod/mp3:TIAr0000000196Al0000000001So0000006243.mp3|      |      |        |  x    | x    |       |                            |
+
+
 ## play backend
 
 update build.sbt
