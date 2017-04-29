@@ -37,7 +37,7 @@ val cmd = sys.props("os.name").toLowerCase match {
   case _ => "ng build"
 }
 
-val params = " --prod --progress --deploy-url /dist "
+val params = " --prod --aot=false --progress --deploy-url /dist "
 
 val outputPath = sys.props("os.name").toLowerCase match {
   case os if os.contains("win") => " --output-path ..\\backend\\public\\dist "
