@@ -27,25 +27,24 @@ update build.sbt
 
 val frontEndProjectName = "frontend"
 val backEndProjectName = "backend"
-val distDirectory = ".." + backEndProjectName + "public/dist"
 
 // Starts: angularCLI build task
 val frontendDirectory = baseDirectory {_ /".."/frontEndProjectName}
 
-val cmd = sys.props("os.name").toLowerCase match {
-  case os if os.contains("win") => "cmd /c ng build"
-  case _ => "ng build"
-}
-
-val params = " --prod --aot=false --progress --deploy-url /dist "
+val params = " --aot=false --progress --deploy-url /dist/ "
 
 val outputPath = sys.props("os.name").toLowerCase match {
   case os if os.contains("win") => " --output-path ..\\backend\\public\\dist "
   case _ => " --output-path ../backend/public/dist "
 }
 
+val cmd = sys.props("os.name").toLowerCase match {
+  case os if os.contains("win") => "cmd /c ng build" + params + outputPath
+  case _ => "ng build" + params + outputPath
+}
+
 val ngBuild = taskKey[Unit]("ng build task.")
-ngBuild := { Process( cmd + params + outputPath , frontendDirectory.value) ! }
+ngBuild := { Process( cmd , frontendDirectory.value) ! }
 (packageBin in Universal) := ((packageBin in Universal) dependsOn ngBuild ).value
 // Ends.
 ```
