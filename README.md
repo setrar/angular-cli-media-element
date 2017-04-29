@@ -22,8 +22,7 @@ $ sbt new playframework/play-scala-seed.g8 --name=backend
 
 update build.sbt
 
-```scala
-
+```sbt
 /* ================================= ng build ================================== */
 
 val frontEndProjectName = "frontend"
@@ -33,18 +32,20 @@ val distDirectory = ".." + backEndProjectName + "public/dist"
 // Starts: angularCLI build task
 val frontendDirectory = baseDirectory {_ /".."/frontEndProjectName}
 
-val ng = sys.props("os.name").toLowerCase match {
-  case os if os.contains("win") => "cmd /c ng"
-  case _ => "ng"
+val cmd = sys.props("os.name").toLowerCase match {
+  case os if os.contains("win") => "cmd /c ng build"
+  case _ => "ng build"
 }
 
-val params = sys.props("os.name").toLowerCase match {
-  case os if os.contains("win") => " build --deploy-url /dist --output-path ..\\backend\\public\\dist --progress "
-  case _ => " build --deploy-url /dist --output-path ../backend/public/dist --progress "
+val params = " --prod --progress --deploy-url /dist "
+
+val outputPath = sys.props("os.name").toLowerCase match {
+  case os if os.contains("win") => " --output-path ..\\backend\\public\\dist "
+  case _ => " --output-path ../backend/public/dist "
 }
 
 val ngBuild = taskKey[Unit]("ng build task.")
-ngBuild := { Process( ng + params , frontendDirectory.value) ! }
+ngBuild := { Process( cmd + params + outputPath , frontendDirectory.value) ! }
 (packageBin in Universal) := ((packageBin in Universal) dependsOn ngBuild ).value
 // Ends.
 ```
