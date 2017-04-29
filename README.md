@@ -45,7 +45,7 @@ val params = sys.props("os.name").toLowerCase match {
 
 val ngBuild = taskKey[Unit]("ng build task.")
 ngBuild := { Process( ng + params , frontendDirectory.value) ! }
-(packageBin in Universal) <<= (packageBin in Universal) dependsOn ngBuild
+(packageBin in Universal) := ((packageBin in Universal) dependsOn ngBuild ).value
 // Ends.
 ```
 
