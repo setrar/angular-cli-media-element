@@ -21,7 +21,7 @@ Create a play backend
   > sbt version 13.2.13+
 
 ```
-$ sbt new playframework/play-scala-seed.g8 --name=backend
+$ sbt new typesafehub/play-scala.g8 --name=backend
 ```
 
 update build.sbt
